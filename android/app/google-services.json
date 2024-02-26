@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "894218036046",
+    "project_id": "todoc10-maadi",
+    "storage_bucket": "todoc10-maadi.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:894218036046:android:57e71d5ee32915fac1b41f",
+        "android_client_info": {
+          "package_name": "com.example.todo_c10_maadi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2262n6NDo5R3weiXptKIOemiQS9FCWn4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
