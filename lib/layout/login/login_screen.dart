@@ -1,13 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_c10_maadi/layout/home/home_screen.dart';
 import 'package:todo_c10_maadi/layout/register/register_screen.dart';
 import 'package:todo_c10_maadi/shared/constants.dart';
 import 'package:todo_c10_maadi/shared/dialog_utils.dart';
 import 'package:todo_c10_maadi/shared/firebaseautherrorcodes.dart';
+import 'package:todo_c10_maadi/shared/remote/firebase/firestore_helper.dart';
 import 'package:todo_c10_maadi/shared/reusable_componenets/custom_form_field.dart';
 import 'package:todo_c10_maadi/style/app_colors.dart';
+import 'package:todo_c10_maadi/model/user.dart' as MyUser;
 
+import '../../shared/providers/auth_provider.dart';
 class LoginScreen extends StatefulWidget {
   static const String routeName = "/Login";
   LoginScreen({Key? key}) : super(key: key);
@@ -107,12 +111,16 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
   void login()async{
+    Authprovider provider = Provider.of<Authprovider>(context,listen: false);
     if(formKey.currentState?.validate()??false){
       DialogUtils.showLoadingDialog(context);
       try{
         UserCredential credential = await FirebaseAuth.instance.signInWithEmailAndPassword(email: emailController.text, password: passwordController.text);
         DialogUtils.hideLoading(context);
         print("user id: ${credential.user?.uid}");
+        MyUser.User? user = await FirestoreHelper.GetUser(credential.user!.uid);
+        provider.setUsers(credential.user, user);
+        Navigator.pushNamedAndRemoveUntil(context, HomeScreen.routeName, (route) => false);
 
       }on FirebaseAuthException catch(error){
         DialogUtils.hideLoading(context);

@@ -1,11 +1,16 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_c10_maadi/model/user.dart';
 import 'package:todo_c10_maadi/shared/constants.dart';
 import 'package:todo_c10_maadi/shared/dialog_utils.dart';
 import 'package:todo_c10_maadi/shared/firebaseautherrorcodes.dart';
+import 'package:todo_c10_maadi/shared/remote/firebase/firestore_helper.dart';
 import 'package:todo_c10_maadi/shared/reusable_componenets/custom_form_field.dart';
 import 'package:todo_c10_maadi/style/app_colors.dart';
+import 'package:todo_c10_maadi/model/user.dart' as MyUser;
 
+import '../../shared/providers/auth_provider.dart';
 import '../home/home_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -140,8 +145,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
     );
   }
-
   void createNewUser()async{
+    Authprovider provider = Provider.of<Authprovider>(context,listen: false);
     if(formKey.currentState?.validate()??false){
       DialogUtils.showLoadingDialog(context);
       try{
@@ -149,13 +154,25 @@ class _RegisterScreenState extends State<RegisterScreen> {
           email: emailController.text,
           password: passwordController.text,
         );
+        FirestoreHelper.AddUser(
+            emailController.text,
+            fullNameController.text,
+            credential.user!.uid
+        );
         DialogUtils.hideLoading(context);
         DialogUtils.showMessage(context: context, message: "Registered successfully ${credential.user?.uid}",
             positiveText: "Ok",
             positivePress: (){
+              provider.setUsers(credential.user, MyUser.User(
+                  id: credential.user!.uid,
+                  email: emailController.text,
+                  fullname: fullNameController.text));
+
               DialogUtils.hideLoading(context);
+              Navigator.pushNamedAndRemoveUntil(context, HomeScreen.routeName, (route) => false);
             });
-      }on FirebaseAuthException catch (e) {
+
+  }on FirebaseAuthException catch (e) {
         DialogUtils.hideLoading(context);
         if (e.code == FirebaseAuthErrorCodes.weakPassword) {
           print('The password provided is too weak.');
