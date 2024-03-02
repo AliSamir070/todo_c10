@@ -9,4 +9,11 @@ class HomeProvider extends ChangeNotifier{
     currentNavIndex = newIndex;
     notifyListeners();
   }
+
+  DateTime? selectedDate;
+
+  void selectNewDate(DateTime? newSelected){
+    selectedDate = newSelected;
+    notifyListeners();
+  }
 }

@@ -21,7 +21,14 @@ class AppTheme{
         seedColor: AppColors.primaryLightColor,
         primary: AppColors.primaryLightColor
     ),
-    useMaterial3: false
+    useMaterial3: false,
+    textTheme: TextTheme(
+      labelMedium: TextStyle(
+        color: AppColors.textColor,
+        fontWeight: FontWeight.w700,
+        fontSize: 18
+      )
+    )
   );
   static ThemeData darkTheme = ThemeData();
 }
