@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_c10_maadi/layout/Edit_screen/editTaskScreen.dart';
 import 'package:todo_c10_maadi/layout/home/provider/home_provider.dart';
 import 'package:todo_c10_maadi/layout/login/login_screen.dart';
 import 'package:todo_c10_maadi/layout/register/register_screen.dart';
@@ -41,7 +42,11 @@ class MyApp extends StatelessWidget {
         RegisterScreen.routeName:(_)=>RegisterScreen(),
         HomeScreen.routeName:(_)=>ChangeNotifierProvider(
             create: (_)=>HomeProvider(),
-            child: HomeScreen()),
+            child: HomeScreen(),
+        ),
+        EditTaskScreen.routeName : (_)=>ChangeNotifierProvider(
+               create: (_)=>HomeProvider(),
+               child: EditTaskScreen()),
         SplashScreen.routeName:(_)=>SplashScreen()
       },
       initialRoute:SplashScreen.routeName,

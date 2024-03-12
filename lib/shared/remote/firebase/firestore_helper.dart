@@ -1,5 +1,8 @@
+
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:todo_c10_maadi/layout/home/widgets/task_widget.dart';
 
 import '../../../model/task.dart';
 import '../../../model/user.dart';
@@ -51,4 +54,29 @@ class FirestoreHelper{
     task.id = taskDocument.id;
     await taskDocument.set(task);
   }
+
+  static Future<List<Task>> GetAllTasks(String uid)async{
+    var taskQuery = await getTaskCollection(uid).get();
+    List<Task> tasksList = taskQuery.docs.map((snapshot) => snapshot.data()).toList();
+
+    return tasksList;
+
+  }
+  static Stream<List<Task>> ListenToTasks(String uid,int date)async*{
+    Stream<QuerySnapshot<Task>> taskQueryStream = getTaskCollection(uid).where("date",isEqualTo: date).snapshots();
+    Stream<List<Task>> tasksStream =  taskQueryStream.map((querySnapShot) => querySnapShot.docs.map((document) => document.data()).toList());
+    yield* tasksStream;
+  }
+  static Future<void> deleteTask({required String uid ,required String taskId })async{
+    await getTaskCollection(uid).doc(taskId).delete();
+    print(uid );
+    print(taskId);
+  }
+
+  static Future<void> updateTask(String userId, String taskId, Task updatedTask) async {
+    var ref = getTaskCollection(userId);
+    var taskDoc = ref.doc(taskId);
+    await taskDoc.update(updatedTask.toFirestore());
+  }
+
 }

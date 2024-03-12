@@ -23,6 +23,22 @@ class AppTheme{
     ),
     useMaterial3: false,
     textTheme: TextTheme(
+      titleSmall: TextStyle(
+        fontWeight: FontWeight.w400,
+        fontSize: 12,
+        color: AppColors.timeColor
+      ),
+      titleMedium: TextStyle(
+          color: AppColors.primaryLightColor,
+          fontWeight: FontWeight.w700,
+          fontSize: 18
+      ),
+
+         titleLarge: TextStyle(
+            color: Colors.greenAccent,
+            fontWeight: FontWeight.w700,
+            fontSize: 20
+        ),
       labelMedium: TextStyle(
         color: AppColors.textColor,
         fontWeight: FontWeight.w700,

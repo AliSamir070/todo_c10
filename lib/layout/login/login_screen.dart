@@ -10,8 +10,8 @@ import 'package:todo_c10_maadi/shared/remote/firebase/firestore_helper.dart';
 import 'package:todo_c10_maadi/shared/reusable_componenets/custom_form_field.dart';
 import 'package:todo_c10_maadi/style/app_colors.dart';
 import 'package:todo_c10_maadi/model/user.dart' as MyUser;
-
 import '../../shared/providers/auth_provider.dart';
+
 class LoginScreen extends StatefulWidget {
   static const String routeName = "/Login";
   LoginScreen({Key? key}) : super(key: key);
